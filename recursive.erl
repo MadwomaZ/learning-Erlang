@@ -34,12 +34,14 @@ sublist([H|T], N, Sublist) when N > 0 ->
 	sublist(T, N-1, [H|Sublist]).	
 
 %%Склееивание двух списков одинаковой длины
-zip([],[]) -> [];
-zip([X|Xs],[Y|Ys]) ->
-	[{X, Y}|zip(Xs, Ys)].
-
+zip(X,Y) -> lists:reverse(zip(X,Y,[])).
+zip([],[], T) -> T;
+zip([X|Xs],[Y|Ys], T) ->
+	zip(Xs, Ys, [{X, Y}|T]).
 %%Склееивание двух списков разной длины
-lzip([],_) -> [];
-lzip(_,[]) -> [];
-lzip([X|Xs],[Y|Ys]) ->
-	[{X, Y}|lzip(Xs, Ys)].
+lzip(X,Y) -> lists:reverse(lzip(X,Y,[])).
+
+lzip(_,[], T) -> T;
+lzip([],_, T) -> T;
+lzip([X|Xs],[Y|Ys], T) ->
+	lzip(Xs, Ys, [{X, Y}|T]).
