@@ -1,5 +1,5 @@
 -module(recursive).
--export([factorial/1, len/1, duplicate/2, sublist/2]).
+-export([factorial/1, len/1, duplicate/2, sublist/2, zip/2]).
 
 %%Возвращает факториал числа
 factorial(N) -> factorial(N, 1).
@@ -26,9 +26,13 @@ duplicate(N, Term, List) when N > 0 ->
 	duplicate(N-1, Term, [Term|List]).
 
 %%Возвращает N первых элементов списка
-sublist(L, N) -> sublist(L, N, []).
+sublist(L, N) -> lists:reverse(sublist(L, N, [])).
 
 sublist(_, 0, Sublist) -> Sublist;
 sublist([],_, Sublist) -> Sublist;
 sublist([H|T], N, Sublist) when N > 0 ->
-	sublist(H, N-1, [T|Sublist]).	
+	sublist(T, N-1, [H|Sublist]).	
+%%Склееивание двух списков
+zip([],[]) -> [];
+zip([X|Xs],[Y|Ys]) ->
+	[{X, Y}|zip(Xs|Ys)].
