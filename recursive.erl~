@@ -35,4 +35,4 @@ sublist([H|T], N, Sublist) when N > 0 ->
 %%Склееивание двух списков
 zip([],[]) -> [];
 zip([X|Xs],[Y|Ys]) ->
-	[{X, Y}|zip(Xs|Ys)].
+	[{X, Y}|zip(Xs, Ys)].
