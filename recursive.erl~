@@ -19,7 +19,10 @@ len([_|T], Acc) ->
 	len(T, Acc+1).
 
 %%Возвращает Term в количестве N раз
-duplicate(0,_) ->
-	[];
-duplicate(N, Term) when N > 0 ->
-	[Term|duplicte(N-1, Term)].
+duplicate(N, Term) ->
+	duplicate(N, Term, []).
+
+duplicate(0,_, List) ->
+	List;
+duplicate(N, Term, List) when N > 0 ->
+	[Term|duplicate(N-1, Term, [Term|List])].
