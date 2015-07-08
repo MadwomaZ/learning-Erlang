@@ -26,7 +26,9 @@ duplicate(N, Term, List) when N > 0 ->
 	duplicate(N-1, Term, [Term|List]).
 
 %%Возвращает N первых элементов списка
-sublist(_, 0) -> [];
-sublist([],_) -> [];
-sublist([H|T], N) when N > 0 ->
-	[H|sublist(T, N-1).
+sublist(L, N) -> sublist(L, N, []).
+
+sublist(_, 0, Sublist) -> Sublist;
+sublist([],_, Sublist) -> Sublist;
+sublist([H|T], N, Sublist) when N > 0 ->
+	sublist(H, N-1, [T|Sublist]).	
