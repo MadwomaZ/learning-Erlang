@@ -1,5 +1,5 @@
 -module(recursive).
--export([factorial/1, len/1]).
+-export([factorial/1, len/1, duplicate/2]).
 
 %%Возвращает факториал числа
 factorial(N) ->
@@ -11,7 +11,15 @@ factorial(N, Acc) when N > 0 ->
 	factorial(N-1, N*Acc).
 
 %%Возвращает длину списка
-len([]) ->
-	0;
-len([_|T]) ->
-	1 + len(T).
+len(L) -> len(L,0).
+	
+len([], Acc) ->
+	Acc;
+len([_|T], Acc) ->
+	len(T, Acc+1).
+
+%%Возвращает Term в количестве N раз
+duplicate(0,_) ->
+	[];
+duplicate(N, Term) when N > 0 ->
+	[Term|duplicte(N-1, Term)].
