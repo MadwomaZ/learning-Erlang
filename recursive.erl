@@ -11,7 +11,9 @@ factorial(N, Acc) when N > 0 ->
 	factorial(N-1, N*Acc).
 
 %%Возвращает длину списка
-len([]) ->
-	0;
-len([_|T]) ->
-	1 + len(T).
+len(L) -> len(L,0).
+	
+len([], Acc) ->
+	Acc;
+len([_|T], Acc) ->
+	len(T, Acc+1).
