@@ -17,3 +17,12 @@ map(F, [H|T]) -> [F(H)|map(F, T)].
 
 incr(X) -> X + 1.
 decr(X) -> X - 1.
+
+filter(Predic, L) -> lists:reverse(filter(Predic, L, [])).
+
+filter(_, [], Acc) -> Acc;
+filter(Predic, [H|T], Acc) -> 
+	case Predic(H) of
+		true  -> filter(Predic, T, [H|Acc]);
+		false -> filter(Predic, T, Acc)
+	end.
