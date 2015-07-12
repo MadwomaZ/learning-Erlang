@@ -1,13 +1,16 @@
 -module(recursive).
--export([factorial/1, len/1, duplicate/2, sublist/2, zip/2, lzip/2]).
+-compile(export_all).
 
 %%Возвращает факториал числа
 factorial(N) -> factorial(N, 1).
 
 factorial(0, Acc) ->
 	Acc;
-factorial(N, Acc) when N > 0 ->
-	factorial(N-1, N*Acc).
+factorial(N, Acc) ->
+	case N > 0 of
+		true  -> factorial(N-1, N*Acc);
+		false -> io:format("Число должно быть больше 0!")
+	end.
 
 %%Возвращает длину списка
 len(L) -> len(L,0).
