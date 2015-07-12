@@ -4,4 +4,10 @@
 one() -> 1.
 two() -> 2.
 
-add(X, Y) -> X() + Y().
+add(X, Y) -> X() + Y(). %%агрументы в виде fun hhfunc:one/0
+
+increment([]) -> [];
+increment([H|T]) -> [H+1|increment(T)].
+
+decrement([]) -> [];
+decrement([H|T]) -> [H-1|decrement(T)].
