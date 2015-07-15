@@ -1,0 +1,17 @@
+-module(bot).
+-compile(export_all).
+
+bot(Msg) ->
+	case Msg of
+		true -> "I do not understand(";
+		"Hello!" -> "Hi! How are you?";
+		"hello" -> "Hi! How are you?";
+		"hello)" -> "Hi! How are you?";
+		"Hello." -> "Hi! How are you?";
+		"Hello" -> "Hi! How are you?";
+		"hi" -> "Hi! How are you?";
+		"Hi." -> "Hi! How are you?";
+		"Hi" -> "Hi! How are you?";
+		"Hi!" -> "Hi! How are you?";
+		"Good!"  -> "Funny!"
+	end.

@@ -49,16 +49,10 @@ lzip([],_, T) -> T;
 lzip([X|Xs],[Y|Ys], T) ->
 	lzip(Xs, Ys, [{X, Y}|T]).
 
-%%Числа Фибоначчи
-fib(1,[],Res) -> 
-	Res;
-    %%io:format("~B, ",[Res]);
-fib(N,[Prev],Res) when N > 1 -> 
-    Res,
-    fib(N-1, [Res+Prev|_], Res).
+fib(N) -> fib(N, []).
 
-
-
-
+fib(0, []) -> [];
+fib(1, [H|_]) -> [H|1];
+fib(N, [H|T]) when N > 1 -> fib(N, [H|fib(N-1, T) + fib(N-2, T)]).
 
 
