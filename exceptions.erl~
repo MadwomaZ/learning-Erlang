@@ -40,3 +40,16 @@ black_knight(Attack) when is_function(Attack, 0) ->
 	end.
 
 talk() -> "Blah Blah".
+
+whoa() ->
+	try
+		talk(),
+		_Knight = "Nikto ne proidet!",
+		_Doubles = [N*2 || N <- lists:seq(1, 100)],
+		throw(up),
+		_WillReturnThis = tequila
+	of
+		tequila -> "Worked!"
+	catch
+		Exception:Reason -> {caught, Exception, Reason}
+	end.

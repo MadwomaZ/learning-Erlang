@@ -48,8 +48,6 @@ whoa() ->
 		_Doubles = [N*2 || N <- lists:seq(1, 100)],
 		throw(up),
 		_WillReturnThis = tequila
-	of
-		tequila -> "Worked!"
 	catch
 		Exception:Reason -> {caught, Exception, Reason}
 	end.
