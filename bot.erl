@@ -12,12 +12,12 @@ bot(Msg) ->
 		"Hi." -> "Hi! How are you?";
 		"Hi" -> "Hi! How are you?";
 		"Hi!" -> "Hi! How are you?";
-		"Good!"  -> "What are you doing?"
-		"Good"  -> "What are you doing?"
-		"good"  -> "What are you doing?"
-		"good!"  -> "What are you doing?"
-		"Cool!"  -> "What are you doing?"
-		"Cool"  -> "What are you doing?"
-		"cool!"  -> "What are you doing?"
+		"Good!"  -> "What are you doing?";
+		"Good"  -> "What are you doing?";
+		"good"  -> "What are you doing?";
+		"good!"  -> "What are you doing?";
+		"Cool!"  -> "What are you doing?";
+		"Cool"  -> "What are you doing?";
+		"cool!"  -> "What are you doing?";
 		"cool"  -> "What are you doing?"
 	end.
