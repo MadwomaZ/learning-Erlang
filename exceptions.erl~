@@ -7,3 +7,36 @@ throws(F) ->
 	catch
 		Throw -> {throw, caught, Throw}
 	end.
+
+errors(F) ->
+	try F() of
+		_ -> ok
+	catch
+		error:Error -> {error, caught, Error}
+	end.
+
+exits(F) ->
+	try F() of
+		_ -> ok
+	catch
+		exit:Exit -> {exit, caught, Exit}
+	end.
+
+%%Монти Пайтон черный рыцарь
+sword(1) -> throw(slice); %резать
+sword(2) -> erlang:error(cut_arm); %рубить руку
+sword(3) -> exit(cut_leg); %рубить ногу
+sword(4) -> throw(punch); %ударить
+sword(5) -> throw(slice). %перейти мост
+
+black_knight(Attack) when is_function(Attack, 0) ->
+	try Attack() of
+		_             -> "Никто не пройдет!"
+	catch
+		throw:sliece  -> "Это просто царапина!";
+		error:cut_arm -> "Бывало и похуже.";
+		exit:cut_leg  -> "Ну давай, слабак!";
+		_:_           -> "Это просто легкая рана."
+	end.
+
+talk() -> "Blah Blah".
