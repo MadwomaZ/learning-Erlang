@@ -21,5 +21,20 @@ lookup(Key, {node, {Key, Val, _, _}}) ->
 lookup(Key, {node, {NodeKey, _, Smaller, _}}) when Key < NodeKey ->
 	lookup(Key, Smaller);
 lookup(Key, {node, {_, _, _, langer}}) ->
-	lookup(Key, Langer).
+	lookup(Key, langer).
 
+%Ищет значение Val в дереве
+has_val(Val, Tree) ->
+	try has_value(Val, Tree) of
+		false -> false
+	catch
+		true -> true
+	end.
+
+has_value(_, {node, 'nil'}) ->
+	false;
+has_value(Val, {node, {_, Val, _, _}}) ->
+	throw(true);
+has_value(Val, {node, {_,_, Left, Right}}) ->
+	has_value(Val, Left),
+	has_value(Val, Right).

@@ -1,5 +1,5 @@
 -module(tree).
--export([empty/0, insert/3, lookup/2]).
+-compile(export_all).
 
 empty() -> {node, 'nil'}.
 
@@ -23,3 +23,18 @@ lookup(Key, {node, {NodeKey, _, Smaller, _}}) when Key < NodeKey ->
 lookup(Key, {node, {_, _, _, langer}}) ->
 	lookup(Key, langer).
 
+%Ищет значение Val в дереве
+has_val(Val, Tree) ->
+	try has_value(Val, Tree) of
+		false -> false
+	catch
+		true -> true
+	end.
+
+has_value(_, {node, 'nil'}) ->
+	false;
+has_value(Val, {node, {_, Val, _, _}}) ->
+	throw(true);
+has_value(Val, {node, {_,_, Left, Right}}) ->
+	has_value(Val, Left),
+	has_value(Val, Right).
