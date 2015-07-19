@@ -28,3 +28,8 @@ adult_section(U = #user{}) when U#user.age >= 18 ->
 	allowed;
 adult_section(_) ->
 	forbidden.
+
+repairman(Rob) ->
+	Details = Rob#robot.details,
+	NewRob = Rob#robot{details = ["Renovated repairman"|Details]},
+	{repaired, NewRob}.
