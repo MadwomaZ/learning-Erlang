@@ -7,6 +7,9 @@
 		details = []}).
 
 first_robot() ->
-	#robot{name = "'Мехатрон'",
+	#robot{name = "Mechatronic",
 	       type = handmade,
-	       details = ["'Двигается с помощью маленького чеговечка внутри'"]}.
+	       details = ["It moves with the little man inside"]}.
+
+car_factory(CorpName) ->
+	#robot{name = CorpName, hobbies = "Build cars"}.
