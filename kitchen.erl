@@ -20,13 +20,16 @@ fridge(FoodList) ->
 	end.
 
 store(Pid, Food) ->
-	From ! {self(), {store, Food}},
+	Pid ! {self(), {store, Food}},
 	receive
 		{Pid, Msg} -> Msg
 	end.
 
 take(Pid, Food) ->
-	From ! {self(), {take, Food}},
+	Pid ! {self(), {take, Food}},
 	receive
 		{Pid, Msg} -> Msg
 	end.
+
+start(FoodList) ->
+	spawn(?MODULE, fridge, [FoodList]).
