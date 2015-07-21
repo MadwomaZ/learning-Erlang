@@ -18,3 +18,15 @@ fridge(FoodList) ->
 		terminate ->
 			ok
 	end.
+
+store(Pid, Food) ->
+	From ! {self(), {store, Food}},
+	receive
+		{Pid, Msg} -> Msg
+	end.
+
+take(Pid, Food) ->
+	From ! {self(), {take, Food}},
+	receive
+		{Pid, Msg} -> Msg
+	end.
