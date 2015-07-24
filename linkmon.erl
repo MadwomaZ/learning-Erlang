@@ -1,42 +1,35 @@
 -module(linkmon).
 -compile(export_all).
 
-myproc() ->
-	timer:sleep(5000),
-	exit(reason).
-
-chain(0) ->
-	receive
-		_ -> ok
-	after 2000 ->
-		exit("chain breaks")
-	end;
-chain(N) ->
-	Pid = spawn(fun() -> chain(N-1) end),
-	link(Pid),
-	receive
-		_ -> ok
-	end.
-
 start_critic() ->
-	spawn(?MODULE, critic, []).
+	spawn(?MODULE,restarter, []).
 
-juidge(Pid, Band, Album) ->
-	Pid ! {self(), {Band, Album}},
+juidge(Band, Album) ->
+	Ref = make_ref(),
+	critic ! {self(), Ref, {Band, Album}},
 	receive
-		{Pid, Criticism} -> Criticism
+		{Ref, Criticism} -> Criticism
 	after 2000 ->
 		timeout
 	end.
 
 critic() ->
 	receive
-		{From, {"Rage Against the Turning Machine", "Unit Testify"}} ->
-			From ! {self(), "They are wonderful"};	
-		{From, {"SOAD", "Memorize"}} ->
-			From ! {self(), "Fantastic!"};
-		{From, {_, _}} ->
-			From ! {self(), "So-so"}
+		{From, Ref, {"Rage Against the Turning Machine", "Unit Testify"}} ->
+			From ! {Ref, "They are wonderful"};	
+		{From, Ref, {"SOAD", "Memorize"}} ->
+			From ! {Ref, "Fantastic!"};
+		{From, Ref, {_, _}} ->
+			From ! {Ref, "So-so"}
 	end,
 	critic().
 
+restarter() ->
+	process_flag(trap_exit, true),
+	Pid = spawn_link(?MODULE, critic, []),
+	register(critic, Pid),
+	receive
+		{'EXIT', Pid, normal}   -> ok;
+		{'EXIT', Pid, shutdown} -> ok;
+		{'EXIT', Pid, _} -> restarter()
+	end.
