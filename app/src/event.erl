@@ -19,3 +19,27 @@ loop(S = #state{server=Server, to_go = [T|Next]}) ->
 normalize(N) ->
 	Limit = 49*24*60*60,
 	[N rem Limit | lists:duplicate(N div Limit, Limit)].
+
+start(EventName, Delay) ->
+	spawn(?MODULE, init, [self(), EventName, Delay]).
+
+start_link(EventName, Delay) ->
+	spawn_link(?MODULE, init, [self(), EventName, Delay]).
+
+%%Внутренние функции для событий
+init(Server, EventName, Delay) ->
+	loop(#state{server = Server,
+		    name = EventName,
+		    to_go = normalize(Delay)}).
+
+cancel(Pid) ->
+	Ref = erlang:monitor(process, Pid),
+	Pid ! {self(), Ref, cancel},
+	receive
+		{Ref, ok} ->
+			erlang:demonitor(Ref, [flush]),
+			ok;
+		{'DOWN', Ref, process, Pid, _Reason} ->
+			ok
+	end.
+	
