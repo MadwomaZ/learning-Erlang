@@ -1,5 +1,5 @@
 -module(process).
--export([start/0, p/0, print/1, block/1, divblock/1]).
+-export([start/0, p/0, print/1, block/1, divblock/1, sortMsg/1]).
  
 print(List) ->
 	io:format("~p~n", [lists:sort(List)]).
@@ -23,8 +23,13 @@ p() ->
       p()
   end.
 
+sortMsg(L) ->
+	Slist =  self() ! lists:sort(L),
+	io:format("~p~n", [Slist]).
+
 divblock(L) ->
 	Sr = (lists:min(L) + lists:max(L))/2,
 	Lsmall = [X || X <- L, X =< Sr],
 	Lbig = [X || X <- L, X >= Sr],
-	Spwn = [spawn(fun() -> lists:sort(X)) end || X <- [Lsmall, Lbig]].
+	Spwn = [spawn(fun() -> sortMsg(X) end) || X <- [Lsmall, Lbig]],
+	io:format("~p~n", [Spwn]).
