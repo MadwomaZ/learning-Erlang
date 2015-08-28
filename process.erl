@@ -24,12 +24,14 @@ p() ->
   end.
 
 sortMsg(L) ->
-	Slist =  self() ! lists:sort(L),
-	io:format("~p~n", [Slist]).
+	Sortlist =  self() ! lists:sort(L),
+	io:format("~p~n", [Sortlist]).
 
 divblock(L) ->
 	Sr = (lists:min(L) + lists:max(L))/2,
 	Lsmall = [X || X <- L, X =< Sr],
 	Lbig = [X || X <- L, X >= Sr],
 	Spwn = [spawn(fun() -> sortMsg(X) end) || X <- [Lsmall, Lbig]],
-	io:format("~p~n", [Spwn]).
+	Slist = sortMsg(L),
+%%	io:format("Spawn: ~p~n", [Spwn]),
+	io:format("Sorting list: ~p~n", [Slist]).
