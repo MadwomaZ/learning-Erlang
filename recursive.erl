@@ -4,13 +4,36 @@
 %%Возвращает факториал числа
 factorial(N) -> factorial(N, 1).
 
-factorial(0, Acc) ->
-	Acc;
-factorial(N, Acc) ->
+factorial(0, Acc) ->	Acc;
+factorial(N, Acc) ->	
 	case N > 0 of
 		true  -> factorial(N-1, N*Acc);
 		false -> io:format("Число должно быть больше 0!")
 	end.
+
+%Возвращает количество чисел из списка L, которые больше N
+overN(L, N) -> overN(L, N, 0).
+
+overN([], _, Acc) -> Acc;
+overN([H|T], N, Acc) ->
+		if H > N ->
+			overN(T, N, Acc+1);
+		H =< N ->
+			overN(T, N, Acc)
+		end.
+
+%Возведение в степень
+stepn(_, 0) -> 1;
+stepn(Ch,1) -> Ch;
+
+stepn(Ch,N) -> Ch * stepn(Ch, N-1).
+
+%Считает сумму цифр в числе
+sumnum(N) -> sumnum(N, 0).
+
+sumnum(0, Sum) -> Sum;
+sumnum(Num, Sum) when Num > 0 ->
+	 sumnum(Num div 10, Sum + Num rem 10).
 
 %%Возвращает длину списка
 len(L) -> len(L,0).

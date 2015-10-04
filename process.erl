@@ -8,7 +8,7 @@ block(L) ->
 	erlang:tuple_to_list(lists:split(erlang:length(L) div 2, L)).
 
 start() ->
-  spawn(proc, p, []).
+  spawn(process, p, []).
  
 p() ->
   receive
@@ -31,7 +31,5 @@ divblock(L) ->
 	Sr = (lists:min(L) + lists:max(L))/2,
 	Lsmall = [X || X <- L, X =< Sr],
 	Lbig = [X || X <- L, X >= Sr],
-	Spwn = [spawn(fun() -> sortMsg(X) end) || X <- [Lsmall, Lbig]],
-	Slist = sortMsg(L),
-%%	io:format("Spawn: ~p~n", [Spwn]),
-	io:format("Sorting list: ~p~n", [Slist]).
+	Spwn = [sortMsg(X) || X <- [Lsmall, Lbig]],
+	io:format("Spawn: ~p~n", [Spwn]).
